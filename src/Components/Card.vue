@@ -2,14 +2,14 @@
     
     <div class="card">
         <div class = "close">
-        <CloseButton/>
+        <CloseButton @click = "$"/>
     </div>
-        <p class="title"> My Title</p>
+        <p class="title"> {{ props.title }}</p>
         <p class="content">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the i...
-        </p>
+        {{ props.content }}
+        </p>     
         <p class="tvakan">
-            05-07-2025 20:30
+            {{ props.time }}
         </p>
     </div>
 </template>
@@ -77,4 +77,7 @@
 
 <script setup>
 import CloseButton from './CloseButton.vue';
+//  import (props) from './Components/defineProps'
+import { defineProps } from 'vue';
+const props = defineProps(["title", "content", "time"])
 </script>

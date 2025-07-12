@@ -1,6 +1,25 @@
 <script setup>
 import Card from './Components/Card.vue' 
 import AddButton from './Components/AddButton.vue';
+import AddNewNote from './Components/AddNewNote.vue';
+import { ref } from 'vue';
+import CloseButton from './Components/CloseButton.vue';
+
+const isVisible = ref(false)
+
+const togglePopup = () => {
+ isVisible.value = !isVisible.value
+}
+const notes = ref([])
+function addNote(title, content){
+  let note = {
+    title: title,
+    content: content,
+    time: (new Date()).toLocaleDateString()
+  }
+  notes.value.push(note);
+  isVisible.value = false
+}
 </script>
 
 <style>
@@ -45,16 +64,20 @@ h1 {
     <h1>Note App</h1>
     <!-- <Card /> -->
       <div class = "notes">
-    <Card />
-    <Card />
-    <Card />
-    <Card />
-    <Card />
-    <Card />
-    <Card />
+    <Card v-for ="item in notes" 
+    :title ="item.title" 
+    :content ="item.content"  
+    :time ="item.time"
+    />
     </div>
-
-    <AddButton/>
+    <AddNewNote v-if=" isVisible" @onClose="togglePopup" @onsave="addNote"/>
+    <AddButton @click = "toggle"/>
+    <AddNewNote v-if = "isVisible"
+    @onClose="togglePopup"
+    @onSave = "addNote"
+    />
+    <AddButton @click = "togglePopup"/>
+    
   </main>
 
 </template>
